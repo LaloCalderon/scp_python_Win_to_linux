@@ -1,0 +1,24 @@
+import paramiko  # Se usa para llamar al comando scp
+from scp import SCPClient
+
+remote_path="/home/sistemas"
+file_path="C:\\Users\\Joel\\PycharmProjects\\pythonProject"
+host = "*.*.*.*"  # Dirección IP del servidor
+port = 22  # número de puerto
+username = "sistemas"  # ssh nombre de usuario
+password = "*****"  # Contraseña
+
+img_name="mexsat"
+ssh_client = paramiko.SSHClient()
+ssh_client.set_missing_host_key_policy(paramiko.AutoAddPolicy)
+ssh_client.connect(host, port, username, password)
+scpclient = SCPClient(ssh_client.get_transport(), socket_timeout=15.0)
+local_path = file_path + "\\" + img_name
+try:
+    scpclient.put(local_path, remote_path)
+except FileNotFoundError as e:
+    print(e)
+    print("El sistema no puede encontrar el archivo especificado")
+else:
+    print("Carga de archivo con éxito")
+ssh_client.close()
