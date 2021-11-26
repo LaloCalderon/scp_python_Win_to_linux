@@ -63,7 +63,7 @@ class User(Base):  ####TABLA DE USUARIOS
 result = session.query(User).all
 result2 = session.query(Incidencias).all
 ################################################
-data = {#'': [''],
+data = {'': [''],
         'Hardware': ['Servidor', 'WS', 'Switch', 'KVM', 'Teléfono IP', 'Impresora', 'Otro'],
         'No Identificado': [''],
         'Software': ['Iztapalapa Operaciones', 'Iztapalapa Ingeniería', 'Hermosillo Operaciones', 'Hermosillo Ing']
@@ -776,24 +776,24 @@ def modifica_reg():
     opciones_ope = ['Filtrar', 'Ordenar']
     entrada_ope = tkinter.OptionMenu(rooot, var3, *opciones_ope)  # ESPACIO PARA INTRODUCIR EL dominio.
     varope = var3
-    entrada_ope.config(width=32)
-    entrada_ope.place(x=10, y=165)
+    #entrada_ope.config(width=32)
+    #entrada_ope.place(x=10, y=165)
 
     var_filtro = tkinter.StringVar(rooot)  # Menú de opción múltiple dominio
     # var_filtro.set('ccs')
 
     # opciones_filtro = ['tipo_falla', 'componente', 'spacecraft', 'operador', 'device', 'ticket', 'date', 'hora', 'ccs']
 
-    ttk.Label(rooot, text="Introduce una clave: ", style="GW.TLabel").place(x=280, y=180)
+    ttk.Label(rooot, text="Introduce una clave: ", style="GW.TLabel").place(x=100, y=190)
     variable_e = StringVar()
     variable_f = StringVar()
 
     optionmenu_e = OptionMenu(rooot, variable_e, *data4.keys())
-    optionmenu_e.config(width=32)
-    optionmenu_e.place(x=400, y=185)
+    optionmenu_e.config(width=25)
+    optionmenu_e.place(x=230, y=185)
     optionmenu_f = OptionMenu(rooot, variable_f, '')
     optionmenu_f.config(width=32)
-    optionmenu_f.place(x=500, y=185)
+    optionmenu_f.place(x=432, y=185)
     Button(rooot, text="Atrás", command=hacia_atras5, width=13).place(x=870, y=95)
     Button(rooot, text="Ver histórico", command=historial, width=13). place(x=870, y=125)
     Button(rooot, text="Update", command=update, width=13).place(x=870, y=155)
@@ -804,7 +804,7 @@ def modifica_reg():
     filtro = variable_f.get()
     variable_e.set('')
     variable_f.set('')
-    Button(rooot, text="Aplicar", command=aplicar, width=10).place(x=780, y=185)
+    Button(rooot, text="Aplicar", command=aplicar, width=10).place(x=675, y=187)
 
     ttk.Label(rooot, text="No. Ticekt: ", style="GW.TLabel").place(x=10, y=10)
     ttk.Label(rooot, text="Status: ", style="GW.TLabel").place(x=10, y=40)
@@ -1334,9 +1334,13 @@ def verifica_login():
 #global rutas_files
 #rutas_files=[]
 def quitar_path():
-    label_file.configure(text="")
+    label_file.configure(text="Seleccione archivos asociados (Máximo 3)")
     label_file.grid(row=21, column=2)
     buton_gar3.destroy()
+    if(label_file1.cget('text')==""):
+        buton_file.destroy()
+    else:
+        pass
     #rutas_files.pop(0)
     #rutas_files.insert(0, 0)
 
@@ -1344,15 +1348,16 @@ def quitar_path1():
     label_file1.configure(text="")
     label_file1.grid(row=22, column=2)
     buton_gar2.destroy()
-    #rutas_files.pop(1)
-    #rutas_files.insert(1, 1)
+    if(label_file2.cget('text')==""):
+        buton_file2.destroy()
+    else:
+        pass
 
 def quitar_path2():
     label_file2.configure(text="")
     label_file2.grid(row=23, column=2)
     buton_gar.destroy()
-    #rutas_files.pop(2)
-    #rutas_files.insert(2, 2)
+
 
 def abrir_archivo3():
     global photoimage8, buton_gar, archivo_abierto3
@@ -1361,41 +1366,45 @@ def abrir_archivo3():
     label_file2.configure(text="File Three: " + archivo_abierto3)
     label_file2.grid(row=23, column=2)
     photo = PhotoImage(file="garbage_collector3.png")
-    photoimage8 = photo.subsample(21, 21)
-    buton_gar=Button(root, text='', image=photoimage8, command=quitar_path2, width=3)
+    photoimage8 = photo.subsample(18, 18)
+    buton_gar=Button(root, text='', image=photoimage8, command=quitar_path2, width=25)
     buton_gar.grid(row=23, column=2, sticky=E)
 
 
 def abrir_archivo2():
-    global photoimage7, photoimage33, buton_gar2, archivo_abierto2
+    global photoimage7, photoimage33, buton_gar2, archivo_abierto2, buton_file2
     archivo_abierto2 = filedialog.askopenfilename(initialdir="/", title="Seleccione un archivo",
                                                  filetypes=(("all files", "*.*"), ("jpeg files", "*.jpg")))
     label_file1.configure(text="File Two: " + archivo_abierto2)
     label_file1.grid(row=22, column=2)
     photo = PhotoImage(file="garbage_collector2.png")
-    photoimage7 = photo.subsample(21, 21)
-    buton_gar2=Button(root, text='', image=photoimage7, command=quitar_path1, width=3)
+    photoimage7 = photo.subsample(18, 18)
+    buton_gar2=Button(root, text='', image=photoimage7, command=quitar_path1, width=25)
     buton_gar2.grid(row=22, column=2, sticky=E)
 
     photo = PhotoImage(file="add_file2.png")
-    photoimage33 = photo.subsample(35, 35)
-    Button(root, text='', image=photoimage33, command=abrir_archivo3, width=3).grid(row=23, column=2, sticky=W)
+    photoimage33 = photo.subsample(21, 21)
+    buton_file2=Button(root, text='', image=photoimage33, command=abrir_archivo3, width=23)
+    buton_file2.grid(row=23, column=2, sticky=W)
 
 
 def abrir_archivo():
-    global datos1, datos2, datos3, photoimage2, photoimage3, photoimage4, buton_gar3, archivo_abierto
+    global datos1, datos2, datos3, photoimage2, photoimage3, photoimage4, buton_gar3, archivo_abierto, buton_file
     archivo_abierto = filedialog.askopenfilename(initialdir="/", title="Seleccione un archivo",
                                                  filetypes=(("all files", "*.*"), ("jpeg files", "*.jpg")))
     label_file.configure(text="File One: " + archivo_abierto)
     label_file.grid(row=21, column=2)
     photo = PhotoImage(file="garbage_collector.png")
-    photoimage2 = photo.subsample(21, 21)
-    buton_gar3=Button(root, text='', image=photoimage2, command=quitar_path, width=3)
+    #photoimage2 = photo.subsample(25, 25)
+    photoimage2 = photo.subsample(18, 18)
+    #buton_gar3 = Button(root, text='', image=photoimage2, command=quitar_path, width=9)
+    buton_gar3=Button(root, text='', image=photoimage2, command=quitar_path, width=25)
     buton_gar3.grid(row=21, column=2, sticky=E)
 
     photo = PhotoImage(file="add_file3.png")
-    photoimage3 = photo.subsample(35, 35)
-    Button(root, text='', image=photoimage3, command=abrir_archivo2, width=3).grid(row=22, column=2, sticky=W)
+    photoimage3 = photo.subsample(21, 21)
+    buton_file=Button(root, text='', image=photoimage3, command=abrir_archivo2, width=23)
+    buton_file.grid(row=22, column=2, sticky=W)
 
 def exito_login():
     style=ttk.Style()
@@ -1409,9 +1418,9 @@ def exito_login():
     global root, now, no_ticket, descrip, entrada_txt, number_of_rows, max_number, img_png5, img_png6, img_png7, \
         photoimagex
     root = Toplevel(ventana_decision)
-    root.geometry("1000x600")
+    root.geometry("993x640")
     root.title("Formato de Reporte de Fallas")
-    root.resizable(False, False)  ## Especifica que la ventana no se puede ampliar
+    #root.resizable(False, False)  ## Especifica que la ventana no se puede ampliar
     root.iconbitmap('tele_ico.ico')
 
     canv = Canvas(root, width=400, height=120, bg='red')
@@ -1465,8 +1474,9 @@ def exito_login():
     Label_file= Label(root, text="Agregar archivos:").grid(row=20, column=2)
 
     photo = PhotoImage(file="add_file.png")
-    photoimagex = photo.subsample(35, 35)
-    Button(root, text='', image=photoimagex, command=abrir_archivo, width=3).grid(row=21, column=2, sticky=W)
+    photoimagex = photo.subsample(21, 21)
+    #photoimagex = photo.subsample(30, 30) comportamiento +- deseado
+    Button(root, text='', image=photoimagex, command=abrir_archivo, width=23).grid(row=21, column=2, sticky=W)
 
     global label_file, label_file1, label_file2
     label_file=Label(root, text="Seleccione archivos asociados (Máximo 3)", font=("times", 10), anchor=CENTER)
@@ -1484,7 +1494,7 @@ def exito_login():
     l5 = Label(root, text="                         Descripción de la falla: ")
     l5.grid(row=20, column=0, sticky=W, pady=2)
 
-    Button(root, text="Atrás", command=hacia_atras6).grid(row=21, column=0)
+    Button(root, text="Atrás", command=hacia_atras6).grid(row=23, column=0)
 
     l6 = Label(root, text="                         Sitio: ")
     l6.grid(row=15, column=0, sticky=W, pady=2)
@@ -1622,8 +1632,11 @@ def times():
     clock.after(200, times)
 
 def update_options_B(*args):
+    #try:
     countries = data[variable_a.get()]
     variable_b.set(countries[0])
+    #except Exception as e:
+    #    print(e)
     menu = optionmenu_b['menu']
     menu.delete(0, 'end')
     for country in countries:
@@ -1675,28 +1688,17 @@ def registro_incidencia():
 
     try:
         os.system("scp "+archivo_abierto+" sistemas@192.168.9.69:"+path)
-        #shell = Terminal(["scp Joel:jooi9@127.0.0.1"+str(archivo_abierto)+" "+lastid1+"copy"])
-        #shell.run()
 
     except Exception as e:
         print(e)
     try:
         os.system("scp "+archivo_abierto2+" sistemas@192.168.9.69:"+path)
-        #shell1 = Terminal(["scp root:313218479@127.0.0.1:"+str(archivo_abierto2)+" "+lastid2+"copy"])
-        #shell1.run()
     except Exception as e:
         print(e)
     try:
         os.system("scp "+archivo_abierto3+" sistemas@192.168.9.69:"+path)
-        #shell2 = Terminal(["scp Joel:joii9@127.0.0.1:"+archivo_abierto3+" "+lastid3+"copy"])
-        #shell2.run()
     except Exception as e:
         print(e)
-
-    #path="C:\\Users\\Joel\\Documents"
-    #subprocess.run(["scp", first, "Joel@localhost:"+path])
-    #subprocess.run(["scp", second, "Joel@localhost:"+path])
-    #subprocess.run(["scp", three, "Joel@localhost:"+path])
 
     datos_ticket = str(no_ticket)   #imprime el valor de ticket que le pasamos en la tabla de registro
     print(datos_ticket)
